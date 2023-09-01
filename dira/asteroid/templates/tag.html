@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+<h4 style="color:blue;">{{nowtag}}</h4>
+<hr>
+{% for b in alltags %}
+
+{{b}}
+    <hr>
+{% endfor %}
+
+
+
+{% endblock %}
+
+
+

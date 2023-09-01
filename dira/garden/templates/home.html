@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+{% if nowr %}
+<h4 style="font-family: sans-serif;">Started Items!</h4>
+{% for n in nowr %}
+    <div class="col">
+        <div class="card">
+          <div class="row g-0">
+            <div class="col-md-3" style="height: 250px; width;:100%; background-image:url('{{ n.con_itm.mainPic  }}');
+            background-size: cover;
+        position:relative;
+        background-position: center; border-radius: 0.375rem 0 0 0.375rem ;">
+
+      
+
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" style="font-family:Arial,Helvetica,sans-serif; font-weight: bold;">{{n.con_itm.titulo}}</h5>
+                <p class="card-text">{{n.con_itm.item_cat.nombre}} | {{ n.cantidad}} {{n.unidades}}</p>
+                {{n.con_itm.card_desc}}
+                <p class="card-text"><small class="text-muted">Started on {{n.fecha_inicio}} | <a href="{% url 'item' n.con_itm.id %}" style="text-decoration: none;">Go to item</a></small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <br>
+    {%endfor %}
+    <hr>
+{% endif %}
+
+{% for a in articles %}
+	<article class="blog-post">
+    {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        <h3>{{a.titulo}}</h3>
+        <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{ a.item_cat.nombre }} | {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
+        
+        {{a.short_desc}}
+    </article>
+    <div style="clear: both;"></div>
+    <hr>
+{% endfor %}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+   
+    {% for np in npages %}
+    <li class="page-item {% if np == 0 %}active{% endif %}"><a class="page-link" href="{% url 'archive' np %}">{{np}}</a></li>
+    {% endfor %}
+   
+  </ul>
+</nav>
+
+{% endblock %}
+
+
+{% block rightbar %}
+<br><br>
+<h4>Collections</h4>
+      <ul class="list-group">
+
+        {% for l in listas %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'coleccion' l.id %}" style="color:black; text-decoration: none;"> {{l.nombre}}</a>
+            <span class="badge bg-primary rounded-pill">{{l.qitems}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+
+<br><br>
+<h4>Authors</h4>
+      <ul class="list-group">
+
+        {% for a in autores %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'autor' a.datos %}" style="color:black; text-decoration: none;"> {{a.datos}}</a>
+            <span class="badge bg-primary rounded-pill">{{a.qlibros}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

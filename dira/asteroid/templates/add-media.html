@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Start {{thisItem.titulo}}{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Add Media File to {{ thisItem.titulo }}</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+      <div class="mb-3">
+          <label class="form-label" for="customFile">Picture:</label>
+            <input type="file" name="imagen" class="form-control" id="customFile">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Tags:</label>
+        <input type="text" name="mtags" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Category</label>
+          <select class="form-select mb-3" name="imgtype">
+            
+                <option value="2">Landscape</option>
+                <option value="1">Portrait</option>
+
+          </select>
+      </div> 
+      <button type="submit" class="btn btn-primary">Add New Item</button>
+    </form>
+</article>
+
+
+{% endblock %}

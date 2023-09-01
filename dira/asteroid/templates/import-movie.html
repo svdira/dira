@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+</div>
+
+<div class="content">
+  <h3>Edit {{ppl.nombre}}</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Name:</label><br>
+    <input type="text" name="nombre" value="{{ppl.nombre}}"><br>
+    <label>Bio:</label><br>
+    <textarea name="bio" style="font-size: 1.2em; line-height: 1.5em; font-family: 'Times New Roman',Georgia,serif; width:60%;">{{ppl.biographics}}</textarea><br>
+    <input type="submit" value="Save Changes" >
+  </form>
+
+
+  <h3>Add Media</h3>
+  <form method="POST" enctype="multipart/form-data" action="{% url 'add-media-persona' %}">
+    {% csrf_token %}
+    <label>Category:</label><br>
+    <select name="imgtype">
+      <option value="1">Profile</option>
+      <option value="2">Landscape</option>
+    </select><br>
+    <label>Pictures:</label>
+    <input type="file" name="imagen" multiple><br>
+    <input type="hidden" name="p" value="{{ppl.id}}">
+    <input type="submit" value="Add Media" >
+  </form>
+</div>
+
+</body>
+</html>

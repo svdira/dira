@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Edit Wiki{% endblock %}
+
+{% block contenido %}
+
+<article>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+      <div class="mb-3">
+       
+        <input type="text" name="campo" value="{{itt.campo}}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      
+       <div class="mb-3">
+   
+         <textarea class="form-control" name="datos" aria-label="With textarea" style="height: 150px;">{{itt.datos}}</textarea>
+        </div>
+       
+         <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</article>
+<hr>
+
+<article>
+
+    <h3>Add Media</h3>
+     <form method="POST" enctype="multipart/form-data" action="{% url 'addIttMedia' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="itt_id" value="{{itt.id}}">
+
+        <div class="mb-3">
+          <label class="form-label" for="customFile">Picture:</label>
+          <input type="file" name="imagen" class="form-control" id="customFile">
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Tags:</label>
+        <input type="text" name="mtags" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</article>
+
+
+{% endblock %}

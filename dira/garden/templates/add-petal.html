@@ -1,0 +1,24 @@
+{% extends 'base0.html' %}
+
+{% block titulo %}Add New Item{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Add New Petal: <a href="{% url 'moveImg' %}">From Archive</a></h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+         <div class="mb-3">
+            <label class="form-label" for="customFile">Cover Picture</label>
+            <input type="file" name="imagen" class="form-control" id="customFile" multiple>
+          </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Tags</label>
+        <input type="text" name="ptags" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>       
+    <button type="submit" class="btn btn-primary">Add Petal</button>
+    </form>
+</article>
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+</div>
+
+<div class="content">
+  <h3><a href="#" style="color:blue; text-decoration:none;">{{thisG.titulo}}</a></h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="search_term">&nbsp;<input type="submit" value="Search">
+  </form>
+
+
+   {% if results %}
+    <hr>
+    <h3>Search Results</h3>
+    {%for r in results%}
+      <p><span style="color:blue; text-decoration:none;">{{r.nombre}}</span>: {{r.biographics|truncatechars:200}} <a href="{% url 'relacionarPG' r.id thisG.id %}">Add [+]</a>
+    {%endfor%}
+
+  {% endif %}
+  <hr>
+{% for p in ppl%}
+  {% if p.persona.mainPic != '/media/gen_ppic.png' %}
+  <a href="{% url 'view-persona' p.id %}">
+  <div class='ppic' style='background-image:url("{{p.persona.mainPic}}");'>
+    <div style="position: absolute; padding-top:0.3em; bottom:0; left:0; width:100%; height:1.2em; background-color: rgba(77, 129, 221, 0.92);">
+      <span style="color:white; padding: 0px; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{p.persona.nombre}}</span>
+    </div>
+  </div>
+  </a>
+  {% endif %}
+  {% endfor %}
+<div style="clear:both";></div>
+  {% for p in ppl%}
+  {% if p.persona.mainPic == '/media/gen_ppic.png' %}
+    <p><a href="{% url 'view-persona' p.persona.id %}" style="color:blue; text-decoration:none;">{{p.persona.nombre}}</a>: {{p.persona.biographics|truncatechars:500}}
+  {% endif %}
+  {% endfor %}
+<div style="clear:both";></div>
+  <hr>
+
+  <div class="pagination">
+  {% for np in npages %}
+    {% if np == thispage %}
+      <a href="{% url 'view-g' cat np %}" class="active">{{np}}</a>
+    {% else %}
+      <a href="{% url 'view-g' cat np %}">{{np}}</a>
+    {% endif %}
+
+  {% endfor %}
+  </div>
+</div>
+
+</body>
+</html>

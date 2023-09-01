@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Add Notes{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Notes on: {{nota.item_note.titulo}}</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Title</label>
+        <input type="text" name="titulo" value="{{nota.titulo}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+
+       <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Content</label>
+         <textarea class="form-control" name="texto" aria-label="With textarea" style="height: 350px;">{{nota.texto}}</textarea>
+        </div>
+
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <br>
+
+    <h4>Convert to Consumo</h4>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'startNoteConsumo' %}">
+        {% csrf_token %}
+        <input type="hidden" name="note_id" value="{{nota.id}}">
+        <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Start Date</label>
+        <input type="text" name="start_date" value="{% now 'Y-m-d' %}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+       
+
+        <div class="mb-3">
+          <label class="form-label" for="customFile">Cover Picture:</label>
+            <input type="file" name="cover_pic" class="form-control" id="customFile">
+      </div>
+       <button type="submit" class="btn btn-primary">Add Consumo</button>
+    </form>
+</article>
+
+
+{% endblock %}

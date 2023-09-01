@@ -1,0 +1,36 @@
+{% extends 'base0.html' %}
+
+
+{% block titulo %}Add New Item{% endblock %}
+
+
+{% block contenido %}
+<a href="{% url 'imgImport' nextp %}"><img src="{{imgs}}" style="max-width: 100%; max-height: 90vh; border:1px solid gray;"></a>
+
+
+<p>{{og}}
+
+{% endblock %}
+
+ {% block leftbar %}
+   
+{%endblock%}
+
+
+{% block rightbar %}
+<br><br>
+ <form method="POST" enctype="multipart/form-data" action="{%url 'saveImg' %}">
+        {% csrf_token %}
+    <input type="hidden" name="oldPath" value="{{og}}">     
+    <button type="submit" class="btn btn-primary">IMPORT</button>
+    </form>
+
+    <hr>
+<form method="POST" enctype="multipart/form-data" action="{%url 'removeFile' %}">
+        {% csrf_token %}
+    <input type="hidden" name="fileRemove" value="{{og}}">     
+    <button type="submit" class="btn btn-primary">DELETE</button>
+    </form>
+
+ 
+{% endblock %}

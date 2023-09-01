@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Add New Item{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>At Bat</h4>
+    <h5> {{game.local.nombre}} - {{game.visit.nombre}}</h5>
+
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Local Team</label>
+          <select class="form-select mb-3" name="contract">
+            {% if c_local %}
+            {% for c in c_local %}
+                <option value="{{c.id}}">{{c.bPlayer.nombre}} @ {{c.bTeam.nombre}}</option>
+            {% endfor %}
+            {% endif %}
+            {% if c_visit %}
+            {% for c in c_visit %}
+                <option value="{{c.id}}">{{c.bPlayer.nombre}} @ {{c.bTeam.nombre}}</option>
+            {% endfor %}
+            {% endif %}
+          </select>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Hits</label>
+            <input type="text" name="h"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">At Bat</label>
+            <input type="text" name="ab"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Runs</label>
+            <input type="text" name="r"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">HR</label>
+            <input type="text" name="hr"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+                <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">CP</label>
+            <input type="text" name="cp"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+
+         <button type="submit" class="btn btn-primary">Add New Item</button>
+    </form>
+</article>
+
+
+{% endblock %}

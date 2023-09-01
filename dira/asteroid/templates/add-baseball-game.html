@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Add New Item{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Add New MLB Game</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Date</label>
+            <input type="text" name="gameDate" value="{% now 'Y-m-d' %}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+
+        <input type="hidden" name="innings" class="form-control" value="9" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+
+        <input type="hidden" name="stadium" value ="MLB TV" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Local Team</label>
+          <select class="form-select mb-3" name="local">
+            {% for c in cats %}
+                <option value="{{c.id}}">{{c.nombre}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+
+        <input type="hidden" name="l_runs" value="0" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Visit Team</label>
+          <select class="form-select mb-3" name="visit">
+            {% for c in cats %}
+                <option value="{{c.id}}">{{c.nombre}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label" >Fase</label>
+            <input type="text" name="fase" class="form-control" value="RS-2023" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+        <input type="hidden" value="0" name="v_runs" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+
+         <button type="submit" class="btn btn-primary">Add New Item</button>
+    </form>
+</article>
+
+
+{% endblock %}

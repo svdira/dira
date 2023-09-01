@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+
+{% for a in articles %}
+	<article class="blog-post">
+        <h3>{{a.titulo}}</h3>
+        <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{ a.item_cat.nombre }} | {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
+        {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        {{a.short_desc}}
+    </article>
+    <div style="clear: both;"></div>
+    <hr>
+{% endfor %}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    
+    {% for np in npages %}
+    <li class="page-item {% if np == page %}active{% endif %}"><a class="page-link" href="{% url 'archive' np %}">{{np}}</a></li>
+    {% endfor %}
+  
+  </ul>
+</nav>
+
+{% endblock %}
