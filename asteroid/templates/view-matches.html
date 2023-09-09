@@ -9,14 +9,14 @@
  <article class="my-3" id="card">
     {% if matches %}
         {% for m in matches %}
-         
+
         <div class="col">
             <div class="card">
               <div class="card-header">
                 {{m.liga.nombre}} | {{m.fecha}}
               </div>
               <div class="card-body">
-                <div style="width:40%; height:30px; float: left;"> 
+                <div style="width:40%; height:30px; float: left;">
                     <img src="{{ m.local.logo.url }}" style="height: 30px;">
                     <div style="float:right;"><h5><a href="{% url 'sccteam' m.local.id %}" style="color: black;text-decoration: none;">{{ m.local.nombre }}</a></h5></div>
                 </div>
@@ -32,7 +32,7 @@
                     <div style="float:left;"><h5><a href="{% url 'sccteam' m.visita.id %}" style="color: black;text-decoration: none;">{{ m.visita.nombre }}</a></h5></div>
                     <img src="{{ m.visita.logo.url }}"  style="height: 30px; float:right;">
                 </div>
-                
+
               </div>
               <div class="card-footer text-muted">
                 {{m.fase}} | <a href="{% url 'viewmatch' m.id %}">view</a><br> {%if m.comms%}{{m.comms}}{%endif%}
@@ -64,7 +64,7 @@
       </ul>
 
       <br><br>
-<h4>Teams</h4>
+<h4>Teams   <a href="{% url 'addSoccerTeam' %}">Add</a></h4>
       <ul class="list-group">
 
         {% for e in equipos %}

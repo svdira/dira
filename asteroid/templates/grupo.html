@@ -41,14 +41,18 @@
     </div>
   </div>
   </a>
+  {% else %}
+   <a href="{% url 'view-persona' p.id %}">
+  <div class='ppic' style='background-color: rgba(77, 129, 221, 0.92);'>
+    <div style="position: absolute; text-align:center; padding-top:0.3em; top:10%; left:0; width:100%; background-color: rgba(77, 129, 221, 0.92);">
+      <span style="color:white; padding: 0px; font-size:1.3em; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{p.persona.nombre}}</span>
+       <br><br> <span style="color:white; padding: 0px; font-size:0.85em; margin-left: 5px; margin-bottom: 0px;">{{p.persona.biographics|truncatechars:120}}</span>
+    </div>
+  </div>
+  </a>
   {% endif %}
   {% endfor %}
 <div style="clear:both";></div>
-  {% for p in ppl%}
-  {% if p.persona.mainPic == '/media/gen_ppic.png' %}
-    <p><a href="{% url 'view-persona' p.persona.id %}" style="color:blue; text-decoration:none;">{{p.persona.nombre}}</a>: {{p.persona.biographics|truncatechars:500}}
-  {% endif %}
-  {% endfor %}
 <div style="clear:both";></div>
   <hr>
 

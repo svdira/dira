@@ -223,6 +223,7 @@ class Equipo(models.Model):
 class Jugador(models.Model):
 	nombre = models.CharField(max_length=128)
 	pais = models.CharField(max_length=128)
+	biographics = models.TextField(default="This section needs to be expanded.")
 
 	def __str__(self):
 		return self.nombre
@@ -231,6 +232,8 @@ class Contrato(models.Model):
 	jug = models.ForeignKey(Jugador, on_delete = models.CASCADE)
 	equ = models.ForeignKey(Equipo, on_delete = models.CASCADE)
 	active = models.BooleanField(default=True)
+	position = models.CharField(default="Not Specified", max_length=256)
+	number = models.IntegerField(default = 0)
 
 	def __str__(self):
 		return self.jug.nombre+'-'+self.equ.nombre

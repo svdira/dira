@@ -111,22 +111,35 @@
                 <li><a class="dropdown-item" href="{% url 'additem' %}">Add Item</a></li>
                 <li><a class="dropdown-item" href="{% url 'addJournalEntry' %}">Add Journal Entry</a></li>
                 <li><a class="dropdown-item" href="{% url 'addcoleccion' %}">Add Collection</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/garden" target="_blank">Garden</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/diradb" target="_blank">PPLDB</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'mlbGames' %}">MLB</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/viewmatches/1">Fútbol</a>
-          </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                  {% for c in catlist %}
+                  <li><a class="dropdown-item" href="{% url 'category' c.item_cat__id 0 %}">{{c.item_cat__nombre}} ({{c.qitems}})</a></li>
+
+                    {% endfor %}
+                    <li><a class="dropdown-item" href="/diradb" >People</a></li>
+              </ul>
+            </li>
+
+             <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Sports
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/viewmatches/1">Fútbol</a></li>
+                <li><a class="dropdown-item" href="{% url 'mlbGames' %}">MLB</a></li>
+
+              </ul>
+            </li>
+
+
         </ul>
         <form class="d-flex" role="search" action="{% url 'search' %}"  method="post">
           {% csrf_token %}
@@ -142,7 +155,7 @@
 <main class="flex-shrink-0">
   <div class="container">
     <div class="row">
-            <div class="col-sm-7"><br>
+            <div class="col-sm-8"><br>
       {% block contenido %}
       <h2>Coronel Gabriel García Márquez</h2>
       <p>El coronel no tiene quien le escriba es una novela corta publicada por el escritor colombiano Gabriel García Márquez en 1961. Es una de las más célebres de las escritas por el autor, y su protagonista, un viejo coronel que espera la pensión que nunca llega, es considerado como uno de los personajes más entrañables de la literatura hispanoamericana del siglo XX. Fue incluida en la lista de las 100 mejores novelas en español del siglo XX del periódico español El Mundo.1​
@@ -211,37 +224,12 @@
   </div>
 
 
-  <div class="col-sm-3">
+  <div class="col-sm-4">
     {% block rightbar %}
     {% endblock %}
   </div>
 
-  <div class="col-sm-2">
-      <br>
-      {% block leftbar %}
-      <h4>Navigation</h4>
-      <ul class="list-group">
 
-        {% for c in catlist %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'category' c.item_cat__id 0 %}" style="color:black; text-decoration: none;"> {{c.item_cat__nombre}}</a>
-            <span class="badge bg-primary rounded-pill">{{c.qitems}}</span>
-          </li>
-        {% endfor %}
-      </ul>
-      <br>
-      <h4>Top Tags</h4>
-      <ul class="list-group">
-
-        {% for c in item_tags %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'itag' c.tag %}" style="color:black; text-decoration: none;"> {{c.tag}}</a>
-            <span class="badge bg-primary rounded-pill">{{c.qitems}}</span>
-          </li>
-        {% endfor %}
-      </ul>
-      {% endblock %}
-    </div>
 
   </div>
 </main>

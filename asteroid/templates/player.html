@@ -21,6 +21,9 @@
     </div>
     <br>
     {% endfor %}
+
+    <h5>Bio</h5>
+    {{jug.biographics|linebreaks}}
       
 </article>
 
@@ -41,7 +44,21 @@
             <option value="{{e.id}}">{{e.nombre}}</option>
           {% endfor %}
         </select>
-      </div>      
+      </div>   
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Position</label>
+         <select class="form-select mb-3" name="position">
+            {% for l in listado %}
+                <option value="{{l}}" {% if l == thisC.position %}selected{%endif%}>{{l}}</option>
+            {% endfor %}
+          </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Number</label>
+        <input type="text" name="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>   
        
       <button type="submit" class="btn btn-primary">Add Contract</button>
     </form>
@@ -60,6 +77,8 @@
         <input type="text" name="pais" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
       </div>
 
+
+
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Team</label>
         <select class="form-select mb-3" name="team2">
@@ -68,6 +87,20 @@
           {% endfor %}
         </select>
       </div> 
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Position</label>
+         <select class="form-select mb-3" name="position">
+            {% for l in listado %}
+                <option value="{{l}}" {% if l == thisC.position %}selected{%endif%}>{{l}}</option>
+            {% endfor %}
+          </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Number</label>
+        <input type="text" name="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>   
       
        
       <button type="submit" class="btn btn-primary">Add Player</button>

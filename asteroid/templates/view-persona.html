@@ -17,15 +17,12 @@
 </div>
 
 <div class="content">
-  
-
- 
 
   {% if nowItems %}
     <h3>{{ ppl.nombre }}'s Items</h3>
     {% for itm in nowItems %}
       <a href="{% url 'item' itm.item.id %}">
-    
+
       <div class='ppic' style='background-image:url("{{itm.item.mainPic}}");'>
         <div style="position: absolute; padding-top:0.3em; bottom:0; left:0; width:100%; background-color: rgba(77, 129, 221, 0.92);">
           <span style="color:white; font-size:0.8em; padding: 0em 0em 1.2em 0em; margin-left: 5px; margin-bottom: 0em; font-weight:bold;">{{itm.item.titulo}} ({{itm.item.pubyear}})</span>
@@ -41,6 +38,8 @@
 
   <h3><a href="{% url 'edit-persona' ppl.id %}" style="text-decoration: none; color:black;">{{ppl.nombre}}</a> | <a href="{% url 'view-pg' ppl.id 0 %}" style="text-decoration: none;">Gallery</a></h3>
  {{ppl.biographics|linebreaks}}
+ <br>
+ <br>
 </div>
 
 </body>

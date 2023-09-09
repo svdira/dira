@@ -8,9 +8,9 @@
         <div class="col">
             <div class="card">
               <div class="card-header">
-                {{partido.liga.nombre}} | {{partido.fecha}}
+                {{partido.liga.nombre}} | {{partido.fecha}} |
                 {% if partido.terminado == False %} <span style="text-align: right;">
-                    <a href="{% url 'closematch' partido.id %}">Close</a>
+                    <a href="{% url 'closematch' partido.id %}">Close</a> | <a href="{% url 'editmatch' partido.id %}">Edit</a>
                 </span>{% endif %}
               </div>
               <div class="card-body">
@@ -159,6 +159,20 @@
                         <input type="text" name="pais" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                       </div>
 
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Position</label>
+                         <select class="form-select mb-3" name="position">
+                            {% for l in listado %}
+                                <option value="{{l}}" >{{l}}</option>
+                            {% endfor %}
+                          </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Number</label>
+                        <input type="text" name="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      </div>
+
                       <input type="hidden" name="equipo" value="{{partido.local.id}}">
                       <input type="hidden" name="partido" value="{{partido.id}}">
 
@@ -251,6 +265,20 @@
                       <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Country</label>
                         <input type="text" name="pais" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      </div>
+
+                       <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Position</label>
+                         <select class="form-select mb-3" name="position">
+                            {% for l in listado %}
+                                <option value="{{l}}" >{{l}}</option>
+                            {% endfor %}
+                          </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Number</label>
+                        <input type="text" name="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                       </div>
 
                       <input type="hidden" name="equipo" value="{{partido.visita.id}}">

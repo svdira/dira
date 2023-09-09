@@ -35,8 +35,9 @@
     {% endif %}
     <hr>
 
+
     {% for i in ci %}
-    {% if col.cfecha|safe < i.itm.lastr %}
+
         {% if i.itm.mainPic %}
            <a href="{% url 'item' i.itm.id %}">
             <div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
@@ -45,44 +46,11 @@
                 background-position: center;
                 background-image:url("{{i.itm.mainPic}}");'>
 
-                <div style="position: absolute; top:5%; left:5%; width:3em; height:3em; ">
-                <img src="/media/assets/gchecked.png" style="width:3em;">
-                </div>
-
-            <div style="position: absolute; bottom:0; left:0; width:100%; height:1.2empx; background-color: rgba(77, 129, 221, 0.92);">
-               <span style="color:white; padding: 0px; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{i.itm.titulo}}</span>
-            </div>
-            </div>
-            </a>
-             {% else %}
-            <a href="{% url 'item' i.itm.id %}">
-            <div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
-                background-size: cover;
-                position:relative;
-                text-align:center;
-                background-color: rgba(77, 129, 221, 0.92);'>
-                <div style="position: absolute; top:5%; left:5%; width:3em; height:3em; ">
-                <img src="/media/assets/gchecked.png" style="width:3em;">
-                </div>
-
-               <div style="position: absolute; top:15%; left:0%; width:100%; text-align:center;">
-                <span style="color:white; font-weight:bold; width:100%;">{{i.itm.titulo}} ({{i.itm.pubyear}}) <br> {{i.itm.author}}</span>
-                </div>
-            </div>
-            </a>
-        {% endif %}
-
-     {% endif %}
-    {% endfor %}
-    {% for i in ci %}
-    {% if col.cfecha|safe >= i.itm.lastr %}
-        {% if i.itm.mainPic %}
-           <a href="{% url 'item' i.itm.id %}">
-            <div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
-                background-size: cover;
-                position:relative;
-                background-position: center;
-                background-image:url("{{i.itm.mainPic}}");'>
+                 {% if col.cfecha|safe < i.itm.lastr %}
+                     <div style="position: absolute; top:5%; left:5%; width:3em; height:3em; ">
+                        <img src="/media/assets/gchecked.png" style="width:3em;">
+                    </div>
+                 {% endif %}
 
             <div style="position: absolute; bottom:0; left:0; width:100%; height:1.2empx; background-color: rgba(77, 129, 221, 0.92);">
                <span style="color:white; padding: 0px; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{i.itm.titulo}}</span>
@@ -97,6 +65,12 @@
                 text-align:center;
                 background-color: rgba(77, 129, 221, 0.92);'>
 
+                {% if col.cfecha|safe < i.itm.lastr %}
+                     <div style="position: absolute; top:5%; left:5%; width:3em; height:3em; ">
+                        <img src="/media/assets/gchecked.png" style="width:3em;">
+                    </div>
+                 {% endif %}
+
 
                <div style="position: absolute; top:5%; left:0%; width:100%; text-align:center;">
                 <span style="color:white; font-weight:bold; width:100%;">{{i.itm.titulo}} ({{i.itm.pubyear}}) <br> {{i.itm.author}}</span>
@@ -105,7 +79,7 @@
             </a>
         {% endif %}
 
-     {% endif %}
+
     {% endfor %}
     <div style="clear: both;"></div>
     <hr>

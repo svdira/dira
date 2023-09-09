@@ -112,7 +112,6 @@
 
 	  <br>
 
-
 	  {% if  tabla  or creditos %}
 	   <h5 style="font-family: sans-serif;">Metadata</h5>
 	  	<ul class="list-group list-group">
@@ -176,8 +175,41 @@
 	  </ul>
 	  <br>
 
-	  
+
 	  {% endif %}
+
+	    <h5 style="font-family: sans-serif;">Tools</h5>
+      <ul class="list-group">
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'edititem' thisItem.id %}" style="text-decoration: none; color:blue;">Edit</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'startitem' thisItem.id %}" style="text-decoration: none; color:blue;">Start</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'tableitem' thisItem.id %}" style="text-decoration: none; color:blue;">Data Table</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addMedia' thisItem.id %}" style="text-decoration: none; color:blue;">Add Media</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addnotes' thisItem.id %}" style="text-decoration: none; color:blue;">Add Section</a>
+        </li>
+
+
+
+      </ul>
+
+
+
+
+      <br>
+
 
 	  {% if more_creditos %}
       <h4>Related Items</h4>
@@ -185,24 +217,21 @@
 
         {% for c in more_creditos %}
           <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'item' c.item.id %}" style="color:blue; text-decoration: none;"> {{c.item.titulo}} ({{c.item.pubyear}})</a>
-           
+          <a href="{% url 'item' c.id %}" style="color:blue; text-decoration: none;"> {{c.titulo}} ({{c.pubyear}})</a>
+
           </li>
         {% endfor %}
       </ul>
       {% endif %}
 
+     <br>
 
-
-
-
-      <br>
 
       <h4>Add Credits</h4>
 
       <form method="POST" enctype="multipart/form-data" action = "{% url 'addItemCredits' %}">
     	{% csrf_token %}
-    
+
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Persona Ids:</label>
         <input type="text" name="per_ids" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -216,9 +245,11 @@
       	<option value="cast">Cast</option>
       	<option value="illustrator">Illustrator</option>
       </select>
-      	
+
     	<input type="submit" value="Add Credits" >
   	</form>
+
+
       {% endblock %}
 
 
@@ -234,7 +265,7 @@
         {% endfor %}
       </ul>
       <br>
-      
+
       <h5 style="font-family: sans-serif;">Tools</h5>
       <ul class="list-group">
 
@@ -258,9 +289,9 @@
           <a href="{% url 'addnotes' thisItem.id %}" style="text-decoration: none; color:blue;">Add Section</a>
         </li>
 
-    
+
 
       </ul>
 
-      
+
       {% endblock %}

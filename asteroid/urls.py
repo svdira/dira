@@ -28,6 +28,7 @@ urlpatterns = [
 	path('addmatch/<lid>/', views.addPartido, name='addmatch'),
 	path('viewmatches/<sta>/', views.viewMatches, name='viewmatches'),
 	path('viewmatch/<pid>/', views.viewMatch, name='viewmatch'),
+	path('editmatch/<pid>/', views.editPartido, name='editmatch'),
 	path('closematch/<pid>/', views.closeMatch, name='closematch'),
 	path('viewliga/<sta>/<lig>', views.viewLiga, name='viewliga'),
 	path('addcontract/<pid>', views.addContract, name='addcontract'),
@@ -77,4 +78,6 @@ urlpatterns = [
 	path('finishNC/',views.finishNoteConsumo,name='finishNoteConsumo'),
 	path('add-soccer-team/',views.addSoccerTeam,name='addSoccerTeam'),
 	path('add-item-credits/',views.addItemCredits,name='addItemCredits'),
+	path('view-contrato/<c>',views.editContrato,name='editContrato'),
+	path('edit-bio/<c>',views.editBiographics,name='editBio'),
 ]
