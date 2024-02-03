@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">{{ ppl.nombre }}</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+  <a href="{% url 'add-persona' %}" >Add Persona</a>
+</div>
+
+<div class="content">
+
+
+<div style="width:  100%;">
+  <div style="width:60%; float:left; margin-right:4%;"> 
+  {%if ppl.mainPic%}
+  <img src="{{ppl.mainPic}}" class="imgppic">
+  {% endif %}
+  <h3><a href="{% url 'edit-persona' ppl.id %}" style="text-decoration: none; color:black;">{{ppl.nombre}}</a> | <a href="{% url 'view-pg' ppl.id 0 %}" style="text-decoration: none;">Gallery</a></h3>
+ {{ppl.biographics|linebreaks}}
+ <br>
+ 
+ </div>
+ <div style="width:33%; float:left;">  
+  <br>
+    {% if dt %}
+    {{dt|safe}}
+    {%endif%}
+ </div>
+</div>
+
+<div style="clear:both"></div>
+
+  {% if nowItems %}
+  <hr>
+    <h3>{{ ppl.nombre }}'s Items</h3>
+   
+    {% for itm in nowItems %}
+      <a href="{% url 'item' itm.item.id %}">
+
+      <div class='ppic' style='background-image:url("{{itm.item.mainPic}}");'>
+
+        {% if itm.item.ncon > 0 %}
+                     <div style="position: absolute; top:5%; left:5%; width:3em; height:3em; ">
+                        <img src="/media/assets/gchecked.png" style="width:3em;">
+                    </div>
+                 {% endif %}
+        <div style="position: absolute; padding-top:0.3em; bottom:0; left:0; width:100%; background-color: rgba(77, 129, 221, 0.92);">
+          <span style="color:white; font-size:0.8em; padding: 0em 0em 1.2em 0em; margin-left: 5px; margin-bottom: 0em; font-weight:bold;">{{itm.item.titulo}} ({{itm.item.pubyear}})</span>
+        </div>
+      </div>
+      </a>
+    {% endfor %}
+  {% endif %}
+
+
+
+
+</div>
+
+</body>
+</html>

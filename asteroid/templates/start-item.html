@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Start {{thisItem.titulo}}{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Start {{thisItem.titulo}}</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Start Date</label>
+        <input type="text" name="fecha_inicio" class="form-control"  value="{% now 'Y-m-d' %}" style="width: 35%;" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Units</label>
+        <input type="text" name="unidades" class="form-control"  value="{{units}}" style="width: 35%;" aria-describedby="emailHelp">
+      </div>
+
+     
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Quantity of {{units}}</label>
+        <input type="text" name="cantidad" class="form-control"  style="width: 35%;" aria-describedby="emailHelp">
+      </div>
+
+       <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Multiplicador</label>
+        <input type="text" name="multiplicador" value="1" class="form-control"  style="width: 35%;" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Part/Season</label>
+        <input type="text" name="season" value="0" class="form-control"  style="width: 35%;" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Format</label>
+        <select type="text" name="formato"  class="form-select"  style="width: 35%;" aria-describedby="emailHelp">
+          {% if thisItem.item_cat.id == 1 or thisItem.item_cat.id == 17 or thisItem.item_cat.id == 18 or thisItem.item_cat.id == 21 or thisItem.item_cat.id == 22   %}
+          <option value = "Printed">Printed</option>
+          <option value = "eBook">eBook</option>
+          {% endif %}
+          {% if thisItem.item_cat.id == 2 or thisItem.item_cat.id == 3 or thisItem.item_cat.id == 19   %}
+          <option value = "Neftlix">Netflix</option>
+          <option value = "Star+">Star+</option>
+          <option value = "Paramout+">Paramout+</option>
+          <option value = "HBO Max">HBO Max</option>
+          <option value = "Crunchyroll">Crunchyroll</option>
+          <option value = "Download">Download</option>
+           <option value = "theater">Theater</option>
+          {% endif %}
+        
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Language</label>
+        <select type="text" name="lan"  class="form-select"  style="width: 35%;" aria-describedby="emailHelp">
+          <option value = "EN">English</option>
+          <option value = "ES">Español</option>        
+        </select>
+      </div>
+
+
+          <button type="submit" class="btn btn-primary">Start Enjoying</button>
+    </form>
+</article>
+
+
+{% endblock %}

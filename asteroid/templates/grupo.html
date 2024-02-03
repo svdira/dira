@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+</div>
+
+<div class="content">
+  <h3><a href="#" style="color:blue; text-decoration:none;">{{thisG.titulo}}</a></h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="search_term">&nbsp;<input type="submit" value="Search">
+  </form>
+
+
+   {% if results %}
+    <hr>
+    <h3>Search Results</h3>
+    {%for r in results%}
+      <p><span style="color:blue; text-decoration:none;">{{r.nombre}}</span>: {{r.biographics|truncatechars:200}} <a href="{% url 'relacionarPG' r.id thisG.id %}">Add [+]</a>
+    {%endfor%}
+
+  {% endif %}
+  <hr>
+{% for r in ppl%}
+
+      <p><a href="{% url 'view-persona' r.persona.id %}" style="color:blue; text-decoration:none;">{{r.persona.nombre}}</a>: {{r.persona.biographics|truncatechars:600}}
+     
+{% endfor %}
+<div style="clear:both";></div>
+<div style="clear:both";></div>
+  <hr>
+
+  <div class="pagination">
+  {% for np in npages %}
+    {% if np == thispage %}
+      <a href="{% url 'view-g' cat np %}" class="active">{{np}}</a>
+    {% else %}
+      <a href="{% url 'view-g' cat np %}">{{np}}</a>
+    {% endif %}
+
+  {% endfor %}
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+  <a href="{% url 'add-persona' %}">Add Persona</a>
+</div>
+
+<div class="content">
+  <h2>Search</h2>
+   <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="search_term">&nbsp;<input type="submit" value="Search">
+  </form>
+
+  {% if results %}
+    <hr>
+    <h3>Search Results</h3>
+    {%for r in results%}
+      <p><a href="{% url 'view-persona' r.id %}" style="color:blue; text-decoration:none;">{{r.nombre}}</a>: {{r.biographics|truncatechars:200}}
+    {%endfor%}
+
+  {% endif %}
+
+ 
+  <p> <a href='/'>Asteroid</a>&nbsp;|&nbsp;
+  {% for g in grupos %}
+    <a href="{% url 'view-g' g.id 0 %}" style="text-decoration: none;">{{g.titulo}} ({{g.npers}})</a>&nbsp;|&nbsp;
+  {% endfor %}
+</div>
+
+</body>
+</html>

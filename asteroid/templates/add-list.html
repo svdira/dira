@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Add New Collection{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Add New Collection</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Title</label>
+        <input type="text" name="nombre" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Date</label>
+        <input type="text" name="cfecha" value="{% now 'Y-m-d' %}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+       <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Description</label>
+         <textarea class="form-control" name="info" aria-label="With textarea"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Collection</button>
+    </form>
+</article>
+
+
+{% endblock %}

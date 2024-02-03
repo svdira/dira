@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Add New Item{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Edit {{wc.titulo}}</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Title:</label>
+        <input type="text" name="titulo" value='{{wc.titulo}}' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Bio:</label>
+         <textarea class="form-control" name="bio" aria-label="With textarea" style="height: 10em;">{{wc.bio}}</textarea>
+      </div>
+
+      <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Tabla:</label>
+         <textarea class="form-control" name="tabla" aria-label="With textarea" style="height: 10em;">{{wc.tabla}}</textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+          
+    </form>
+<hr>
+<br>
+
+<h4>Add Media</h4>
+
+  <form method="POST" enctype="multipart/form-data" action="/add-wcm/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="3wBjtBsAa4QxC2ILSAzRB3uvGenXkMsciwfG0GNxrVUWvTPI9yMfi2WSvkp0yNz1">
+    <label>Pictures:</label>
+    <input type="file" name="imagen" multiple><br>
+    <input type="hidden" name="wchild" value="{{wc.id}}">
+    <input type="submit" value="Add Media" >
+  </form>
+</article>
+
+
+{% endblock %}

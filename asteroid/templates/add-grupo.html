@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+</div>
+
+<div class="content">
+  <h3>Add New Grupo</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Nombre:</label><br>
+    <input type="text" name="titulo"><br>
+    <label>Tipo:</label><br>
+    <select name="tipo">
+      <option value="personajes">Dramatis Personae</option>
+      <option value="soccerteam">Soccer Team</option>
+      <option value="socialgroup">Social Group</option>
+      <option value="baseballteam">Baseball Team</option>
+    </select><br>
+    <label>Description:</label><br>
+    <textarea name="desc" style="font-size: 1.2em; line-height: 1.5em; font-family: 'Times New Roman',Georgia,serif; width:60%;"></textarea><br>
+    <br>
+    <input type="submit" value="Save Group" >
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Edit Item: {{thisItem.titulo}}{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4>Edit Item</h4>
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Title</label>
+        <input type="text" name="titulo" value="{{thisItem.titulo}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Category</label>
+          <select class="form-select mb-3" name="categoria">
+            {% for c in cats %}
+                {% if thisItem.item_cat.id == c.id %}
+                    <option value="{{c.id}}" selected>{{c.nombre}}</option>
+                {%else%}
+                    <option value="{{c.id}}">{{c.nombre}}</option>
+                {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+         <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">New Tags</label>
+        <input type="text" name="itmtags" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+       <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Content</label>
+         <textarea class="form-control" name="contenido" aria-label="With textarea" style="height: 350px;">{{thisItem.contenido}}</textarea>
+        </div>
+       
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <br>
+</article>
+
+
+{% endblock %}
+
+
+{% block rightbar %}
+<br>
+<h5>Related Media</h5>
+{% if rel_media %}
+
+{% for r in rel_media %}
+
+<img src="{{r.imagen.url}}" style="max-width: 100%; border-radius:2.5%;border:1px solid gray;">
+<br>&lt;p&gt;&lt;img src='{{r.imagen.url}}' style='width:100%; border:1px solid grey; float:left; margin-bottom:1em;'&gt;&lt;/p&gt;
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endblock %}

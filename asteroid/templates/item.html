@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+	<article class="blog-post">
+
+   {% if thisItem.mainPic %}<img src="{{thisItem.mainPic}}" style="border:1px solid grey; float:left; width:30%; margin-right: 16px; margin-bottom: 16px;">{% endif %}
+        <h4>{{thisItem.titulo}} {% if thisItem.pubyear > 0 %} ({{thisItem.pubyear}}){% endif %}</h4>
+
+        <p class="blog-post-meta">{% if thisItem.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{ thisItem.item_cat.nombre }} | {{thisItem.fecha}} </p>
+
+
+
+        {{thisItem.contenido|safe|linebreaks}}
+
+        {% if tabla and thisItem.item_cat.id == 16  %}
+        	{% for t in tabla %}
+
+
+        	{% if t.mainPic %}
+           <a href="{% url 'edit-itt' t.id %}">
+            <div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
+                background-size: cover;
+                position:relative;
+                background-position: center;
+                background-image:url("{{t.mainPic}}");'>
+
+            <div style="position: absolute; bottom:0; left:0; width:100%; height:1.2empx; background-color: rgba(77, 129, 221, 0.92);">
+               <span style="color:white; padding: 0px; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{t.campo}}</span>
+            </div>
+            </div>
+            </a>
+        {% endif %}
+
+
+        {% endfor %}
+
+        <div style="clear:both;"></div>
+        	{% for t in tabla %}
+         {% if not t.mainPic %}
+
+        		<a href="{% url 'edit-itt' t.id %}" style="color:black; text-decoration:none;"><b>{{t.campo}}</b> </a>
+        		{{t.datos|linebreaks}}
+
+        {% endif %}
+        	{% endfor %}
+
+        {% endif %}
+
+        <p>{% for t in itags %}<a href="{% url 'itag' t.tag %}" style="text-decoration:none;">{{t.tag}}</a>&nbsp;|&nbsp;{%endfor%}
+
+        {% if notas %}
+           	<div style="clear:both;"></div>
+            {% for n in notas %}
+            		<hr>
+                
+             {% if n.InPogress %}
+             	<div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
+                background-size: cover;
+                position:relative;
+                background-position: center;
+                background-image:url("{{n.InPogress.cover_pic.url}}");'></div>
+             {% endif %}
+
+             <br><a href="{% url 'editnotes' n.id %}" style="color:black; text-decoration:none;"><h5>{{n.titulo}}</h5> </a>
+
+        		{{n.texto|safe|linebreaks}}
+        		{% if n.InPogress %}
+        		{% if n.InPogress.estatus == 1 %}
+        				{% if  n.InPogress.start_date == n.InPogress.finish_date %}
+        						<p><b>Read on {{n.InPogress.start_date}}</b>
+        				{% else %}
+        			<p><b>Read from {{n.InPogress.start_date}} to {{n.InPogress.finish_date}}</b>
+        				{%endif%}
+        		{% else %}
+        			<form method="POST" action="{% url 'finishNoteConsumo' %}">
+        				{% csrf_token %}
+        				<input type = 'hidden' name='nmid' value='{{n.InPogress.id}}'>
+                Start: <input type="text" name="start_date" value="{% now 'Y-m-d' %}"> Finished:
+        				<input type="text" name="finish_date" value="{% now 'Y-m-d' %}">
+        				<input type="submit" name="finish" value="Finish">
+        			</form>
+
+        		{% endif %}
+        		{% endif %}
+
+        		<div style="clear:both;"></div>
+
+            {% endfor %}
+        {% endif %}
+
+    </article>
+
+    <div style="clear: both;"></div>
+    <hr>
+
+
+
+{% endblock %}
+
+{% block rightbar %}
+
+	  <br>
+
+	  {% if  tabla  or creditos %}
+	   <h5 style="font-family: sans-serif;">Metadata</h5>
+	  	<ul class="list-group list-group">
+
+	  		{% if creditos %}
+	  			{% for ic in creditos %}
+	  		<li class="list-group-item d-flex justify-content-between align-items-start">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">{{ic.credit|capfirst}}</div>
+		      &nbsp;&nbsp;<a href="{% url 'view-persona' ic.persona.id %}" style="text-decoration: none;">{{ic.persona.nombre}}</a>
+		    </div>
+
+  			</li>
+  			{% endfor %}
+	  		{% endif %}
+
+	  	{% for t in tabla %}
+	  		<li class="list-group-item d-flex justify-content-between align-items-start">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">{{t.campo|capfirst}}</div>
+		      &nbsp;&nbsp;{% if t.campo == "author" %}<a href="{% url 'autor' t.datos %}" style="text-decoration: none;">{{t.datos}}</a>{%else%}{{t.datos}}{% endif %}
+		    </div>
+
+  			</li>
+	  	{% endfor %}
+
+	  </ul>
+	  <br>
+	  {% endif %}
+
+	  {% if consumos %}
+	   <h5 style="font-family: sans-serif;">Consumos</h5>
+	  	<ul class="list-group list-group">
+
+	  	{% for t in consumos %}
+	  		<li class="list-group-item d-flex justify-content-between align-items-start">
+		    <div class="ms-2 me-auto">
+		      <div>{% if t.season > 0 %}<b>Season {{t.season}}</b><br>{% endif %}{% if t.fecha_inicio == t.fecha_fin %}{{t.fecha_fin}}{%else%}{{t.fecha_inicio}} - {{t.fecha_fin}}{%endif%}</div>
+		    </div>
+
+  			</li>
+	  	{% endfor %}
+
+	  </ul>
+	  <br>
+	  {% endif %}
+
+	  {% if listas %}
+	   <h5 style="font-family: sans-serif;">Listas</h5>
+	  	<ul class="list-group list-group">
+
+	  	{% for t in listas %}
+	  		<li class="list-group-item d-flex justify-content-between align-items-start">
+		    <div class="ms-2 me-auto">
+		      <div><a href="{% url 'coleccion' t.col.id %}" style="color:black; text-decoration: none;">{{t.col.nombre}}</a></div>
+		    </div>
+
+  			</li>
+	  	{% endfor %}
+
+	  </ul>
+	  <br>
+
+
+	  {% endif %}
+
+	    <h5 style="font-family: sans-serif;">Tools</h5>
+      <ul class="list-group">
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'edititem' thisItem.id %}" style="text-decoration: none; color:blue;">Edit</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'startitem' thisItem.id %}" style="text-decoration: none; color:blue;">Start</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'tableitem' thisItem.id %}" style="text-decoration: none; color:blue;">Data Table</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addMedia' thisItem.id %}" style="text-decoration: none; color:blue;">Add Media</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addnotes' thisItem.id %}" style="text-decoration: none; color:blue;">Add Section</a>
+        </li>
+
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'quemar' thisItem.id %}" style="text-decoration: none; color:blue;">Quemar</a>
+        </li>
+
+      </ul>
+
+
+
+
+      <br>
+
+
+	  {% if more_creditos %}
+      <h4>Related Items</h4>
+      <ul class="list-group">
+
+        {% for c in more_creditos %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'item' c.id %}" style="color:blue; text-decoration: none;"> {{c.titulo}} ({{c.pubyear}})</a>
+
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+     <br>
+
+
+      <h4>Add Credits</h4>
+
+      <form method="POST" enctype="multipart/form-data" action = "{% url 'addItemCredits' %}">
+    	{% csrf_token %}
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Persona Ids:</label>
+        <input type="text" name="per_ids" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+
+      <input type="hidden" value="{{thisItem.id}}" name = "iid">
+
+      <select class="form-select mb-3" name="credit">
+      	<option value="author">Author</option>
+      	<option value="director">Director</option>
+      	<option value="cast">Cast</option>
+      	<option value="illustrator">Illustrator</option>
+      </select>
+
+    	<input type="submit" value="Add Credits" >
+  	</form>
+
+
+      {% endblock %}
+
+
+   {% block leftbar %}
+      <h4>Navigation</h4>
+      <ul class="list-group">
+
+        {% for c in catlist %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'category' c.item_cat__id 0 %}" style="color:black; text-decoration: none;"> {{c.item_cat__nombre}}</a>
+            <span class="badge bg-primary rounded-pill">{{c.qitems}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <br>
+
+      <h5 style="font-family: sans-serif;">Tools</h5>
+      <ul class="list-group">
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'edititem' thisItem.id %}" style="text-decoration: none; color:blue;">Edit</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'startitem' thisItem.id %}" style="text-decoration: none; color:blue;">Start</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'tableitem' thisItem.id %}" style="text-decoration: none; color:blue;">Data Table</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addMedia' thisItem.id %}" style="text-decoration: none; color:blue;">Add Media</a>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'addnotes' thisItem.id %}" style="text-decoration: none; color:blue;">Add Section</a>
+        </li>
+
+
+
+      </ul>
+
+
+      {% endblock %}

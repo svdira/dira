@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{thisPic.persona.nombre}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+  <a href="{% url 'add-persona' %}" >Add Persona</a>
+</div>
+
+<div class="content">
+  <div style="width:100%; text-align: center;">
+  <a href="/viewr">
+      <img src="{{ thisPic.imagen.url }}" style="max-width: 100%; max-height: 97vh; margin:0.5em; border:1px solid gray;">
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

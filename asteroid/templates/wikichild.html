@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+  <article class="blog-post">
+        <h4>{{wc.titulo}} <a href="{% url 'editwikichild' wc.id %}" style="text-decoration: none;">&#9998;</a></h4>
+        {% if wc.mainPic %}<img src="{{wc.mainPic}}" style="border:1px solid grey; float:left; width:30%; margin-right: 16px; margin-bottom: 16px;">{% endif %}
+
+        {{wc.bio|linebreaks}}    
+    <div style="clear: both;"></div>
+    <hr>
+  </article>
+
+
+{% endblock %}
+
+
+{% block rightbar %}
+
+<br>
+{%if brothers %}
+<h5><a href="{% url 'wiki' wc.parent.id %}" style="text-decoration: none; color:blue;">{{wc.parent.titulo}}</a></h5>
+      <ul class="list-group">
+
+        {% for b in brothers %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'wikichild' b.id %}" style="text-decoration: none;"> {{b.titulo}}</a>
+          </li>
+        {% endfor %}
+      </ul>
+{%endif%}
+{% endblock %}

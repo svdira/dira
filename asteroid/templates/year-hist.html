@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Finished Items{% endblock %}
+
+{% block contenido %}
+
+<article>
+    <h4> {{categoria.nombre}} consumned in {{anho}} ({{ncons}})</h4>
+
+
+    {% for i in consumos %}
+
+        {% if i.con_itm.mainPic %}
+           <a href="{% url 'item' i.con_itm.id %}">
+            <div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
+                background-size: cover;
+                position:relative;
+                background-position: center;
+                background-image:url("{{i.con_itm.mainPic}}");'>
+
+
+
+            <div style="position: absolute; bottom:0; left:0; width:100%; height:1.2empx; background-color: rgba(77, 129, 221, 0.92);">
+               <span style="color:white; padding: 0px; margin-left: 5px; margin-bottom: 0px; font-weight:bold;">{{i.con_itm.titulo}} ({{i.con_itm.pubyear}}){% if i.season > 0 %} - S{{i.season}}{% endif %}</span>
+            </div>
+            </div>
+            </a>
+        {% endif %}
+
+
+    {% endfor %}
+
+    <div style="clear: both;"></div>
+    <hr>
+</article>
+
+
+{% endblock %}
+
+
+{% block rightbar %}
+<br><br>
+<h4>Years</h4>
+      <ul class="list-group">
+
+        {% for co in cortes %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'yearHist' co.fecha_fin__year cat %}" style="color:black; text-decoration: none;"> {{co.fecha_fin__year}}</a>
+            <span class="badge bg-primary rounded-pill">{{co.qitems}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

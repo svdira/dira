@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+{% for a in wikis %}
+
+  <article class="blog-post">
+        {% if a.mainPic %}<a href="{% url 'wiki' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        <h5><a href="{% url 'wiki' a.id %}" style='text-decoration: none;'>{{a.titulo}}</a></h5>
+        {{a.short_desc}}   
+        
+
+
+
+    <div style="clear: both;"></div>
+    <hr>
+  </article>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block rightbar %}
+
+<br>
+<h4>Authors</h4>
+      <ul class="list-group">
+
+        {% for a in autores %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'view-persona' a.persona__id %}" style="color:black; text-decoration: none;"> {{a.persona__nombre}}</a>
+            <span class="badge bg-primary rounded-pill">{{a.qlibros}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

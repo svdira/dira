@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Match Activity{% endblock %}
+
+{% block contenido %}
+
+<h3>{{season}} Stats</h3>
+
+ <article class="my-3" id="card">
+
+        {% if bat_stats %}
+      <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col">AVG</th>
+            <th scope="col">H-AB</th>
+            <th scope="col">HR</th>
+            <th scope="col">rbi</th>
+            <th scope="col">Runs</th>
+
+          </tr>
+          </thead>
+          <tbody>
+            {% for ab in bat_stats %}
+                <tr>
+                    <td>{{ab.contract__bPlayer__nombre}}</td>
+                    <td>{% if ab.savg >= 100%}0.{%else%}0.0{%endif%}{{ab.savg|floatformat:0}}</td>
+                    <td>{{ab.hits|floatformat:0}}-{{ab.atbat|floatformat:0}} </td>
+                    <td>{{ab.hrs}}</td>
+                    <td>{{ab.rbi}}</td>
+                    <td>{{ab.runs}}</td>
+
+                </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+        {% endif%}
+
+         
+
+
+
+
+</article>
+
+
+{% endblock %}
+
+{% block rightbar %}
+<br><br>
+<h4>Actions</h4>
+      <ul class="list-group">
+
+
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'mlbAtBat' 2 %}" style="color:black; text-decoration: none;"> At Bat</a>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'mlbPitch' 2 %}" style="color:black; text-decoration: none;"> Pitch</a>
+          </li>
+
+      </ul>
+{% endblock %}

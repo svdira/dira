@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/dira_style.css' %}" rel="stylesheet">
+<title>{{ptitle}}</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="active" href="{% url 'plantilla2' %}">Home</a>
+  <a href="{% url 'view-ppl' 'wiki' 0 %}">Personas</a>
+  <a href="{% url 'view-ppl' 'personaje' 0 %}">Characters</a>
+</div>
+
+<div class="content">
+  <h3>Add New Persona</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Name:</label><br>
+    <input type="text" name="nombre"><br>
+    <label>Category:</label><br>
+    <select name="tipo">
+      <option value="wiki">Persona</option>
+      <option value="personaje">Character</option>
+      <option value="objeto">Objeto/Item</option>
+      <option value="contacto">Contacto</option>
+      <option value="contacto_m">Contacto M</option>
+    </select><br>
+    <label>Bio:</label><br>
+    <textarea name="bio" style="font-size: 1.2em; line-height: 1.5em; font-family: 'Times New Roman',Georgia,serif; width:60%;"></textarea><br>
+    <label>Profile Picture</label><br>
+    <input type="file" name="ppic"><br>
+
+    <br><br>
+    <label>Add to Group</label><br>
+    <select name="grupo">
+      <option value="0">Ninguno</option>
+      {% for g in grupos %}
+      <option value="{{g.id}}">{{g.titulo}}</option>
+      {% endfor %}
+    </select><br>
+    <input type="submit" value="Add Persona" >
+  </form>
+</div>
+
+</body>
+</html>

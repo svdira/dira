@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+<h4 style="color:blue;">{{nowtag}}</h4>
+<hr>
+{% for b in alltags %}
+
+
+	<article class="blog-post">
+         {% if b.item_t.mainPic %}<a href="{% url 'item' b.item_t.id %}"> <img src="{{b.item_t.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        <h4>{{b.item_t.titulo}}{% if b.item_t.pubyear > 0 %} ({{b.item_t.pubyear}}){% endif %}</h4>
+        <p class="blog-post-meta">{% if b.item_t.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{b.item_t.fecha}}  | <a href="{% url 'item' b.item_t.id %}" style="text-decoration:none;">view</a></p>
+        <b>{{b.item_t.item_cat.nombre}}</b> | {{b.item_t.short_desc}}
+    </article>
+    <div style="clear: both;"></div>
+    <hr>
+{% endfor %}
+
+
+
+{% endblock %}
+
+
+

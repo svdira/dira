@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>The Asteroid B612 {{ col.nombre }}</title>
+</head>
+<body>
+
+<h1>The Asteroid B612 {{ col.nombre }}</h1>
+	{%if colitms %}
+		{% for c in colitms %}
+			<h2>{{c.itm.titulo}}</h2>
+			{{c.itm.contenido|safe|linebreaks}}
+			{% if c.itm.notes %}
+			   {% for n in c.itm.notes %}
+			        <h3>{{n.titulo}}</h3>
+			        {{n.texto|safe|linebreaks}}
+			   {% endfor %}
+			{% endif %}
+		{% endfor %}
+	{%endif%}
+</body>
+</html>

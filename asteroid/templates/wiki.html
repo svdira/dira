@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block contenido %}
+
+
+
+<script src="{% static 'js/masonry.pkgd.min.js' %}" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+
+
+
+
+  <article class="blog-post">
+        {% if wiki.mainPic %}<img src="{{wiki.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;">{% endif %}
+        <h4>{{wiki.titulo}}</h4>
+        {{wiki.contenido}}   
+
+        
+        <br><br>
+
+        <h4>Pages | <a href="{% url 'addwikichild' wiki.id %}" style='text-decoration: none;'>Add Page</a> </h4> 
+  
+    <div style="clear: both;"></div>
+    {%if children%}
+          
+    <div class="row" data-masonry='{"percentPosition": true }'>
+      {% for c in children %}
+      <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        {% if c.mainPic %}
+        <img class="bd-placeholder-img card-img-top" width="100%" src="{{c.mainPic}}">
+        {%endif%}
+        <div class="card-body">
+          <h5 class="card-title"><a href='{% url "wikichild" c.id  %}' style="text-decoration: none;">{{c.titulo}}</a></h5>
+          <p class="card-text">{{c.bio|truncatechars:300|safe}}</p>
+        </div>
+      </div>
+       </div>
+      {% endfor %}
+   </div>
+     {%endif%}
+      <!--
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+        <div class="card-body">
+          <h5 class="card-title">Card title that wraps to a new line</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card p-3">
+        <figure class="p-3 mb-0">
+          <blockquote class="blockquote">
+            <p>A well-known quote, contained in a blockquote element.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-body-secondary">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card text-bg-primary text-center p-3">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>A well-known quote, contained in a blockquote element.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-white">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has a regular title and short paragraph of text below it.</p>
+          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        <svg class="bd-placeholder-img card-img" width="100%" height="260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Card image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Card image</text></svg>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card p-3 text-end">
+        <figure class="mb-0">
+          <blockquote class="blockquote">
+            <p>A well-known quote, contained in a blockquote element.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0 text-body-secondary">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    -->
+
+    <hr>
+  </article>
+
+
+{% endblock %}
+
+
+{% block rightbar %}
+
+<br>
+<h4>Authors</h4>
+      <ul class="list-group">
+
+        {% for a in autores %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'view-persona' a.persona__id %}" style="color:black; text-decoration: none;"> {{a.persona__nombre}}</a>
+            <span class="badge bg-primary rounded-pill">{{a.qlibros}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

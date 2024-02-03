@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+
+{% if cat == '1' or cat == '2' or cat == '3' or cat == '4' or cat == '14' or cat == '17' or cat == '15' or cat == '18' or cat == '19' or cat == '21' or cat == '22' %}
+
+<h4 style="color:blue;">Finished {{ocat.nombre}} ({{nitms}}) | <a href="{% url 'catqueue' cat 0 %}">Queue</a>
+{% if articles%}
+{% for co in cortes %} | <a href="{% url 'yearHist' co.fecha_fin__year cat %}">{{co.fecha_fin__year}}</a>{% endfor %}</h4>
+<hr>
+
+{% for a in articles %}
+
+	<article class="blog-post">
+        {% if a.con_itm.mainPic %}<a href="{% url 'item' a.con_itm.id %}"> <img src="{{a.con_itm.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        <h4>{{a.con_itm.titulo}}{% if a.con_itm.pubyear > 0 %} ({{a.con_itm.pubyear}}){% endif %}{% if a.season > 0 %} - Season {{a.season}}{% endif %}</h4>
+        <p class="blog-post-meta">{% if a.con_itm.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha_fin}}  | 
+          <a href="{% url 'item' a.con_itm.id %}" style="text-decoration:none;">view</a></p>
+
+        {{a.con_itm.short_desc}}
+
+    </article>
+    <div style="clear: both;"></div>
+    <hr>
+{% endfor %}
+{%endif%}
+
+{% else %}
+<h4 style="color:blue;">{{ocat.nombre}} ({{nitms}})</h4>
+<hr>
+{% for a in articles %}
+
+  <article class="blog-post">
+        {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
+        <h3>{{a.titulo}}</h3>
+        <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
+
+        {{a.short_desc}}
+
+
+        {% if a.mainLand and not a.mainPic %}
+        <p><br><a href="{% url 'item' a.id %}">
+          <img src="{{a.mainLand}}" style="border:1px solid grey; float:left; width:100%; margin-right: 16px; margin-bottom: 16px;">
+        </a>
+        {%endif%}
+    </article>
+    <div style="clear: both;"></div>
+    <hr>
+{% endfor %}
+
+{%endif%}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+    {% for np in npages %}
+    <li class="page-item {% if np == page %}active{% endif %}"><a class="page-link" href="{% url 'category' cat np %}">{{np}}</a></li>
+    {% endfor %}
+
+  </ul>
+</nav>
+
+{% endblock %}
+
+
+{% block rightbar %}
+
+<br>
+<h4>Authors</h4>
+      <ul class="list-group">
+
+        {% for a in autores %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'view-persona' a.persona__id %}" style="color:black; text-decoration: none;"> {{a.persona__nombre}}</a>
+            <span class="badge bg-primary rounded-pill">{{a.qlibros}}</span>
+          </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

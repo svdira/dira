@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+
+{% block contenido %}
+
+
+{% if articles %}
+{% for a in articles %}
+<div class="list-group">
+  <a href="{% url 'item' a.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+    <div class="d-flex gap-2 w-100 justify-content-between">
+      <div>
+        <h6 class="mb-0">{{a.item_cat.nombre}} | {{a.titulo}}</h6>
+        <p class="mb-0 opacity-75">{{a.card_desc}}</p>
+      </div>
+      <small class="opacity-50 text-nowrap">{{a.fecha}}</small>
+    </div>
+  </a> 
+</div>
+<br>
+{% endfor %}
+
+{% else %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  Your search has no results, please try other Keywords.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}
