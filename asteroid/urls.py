@@ -91,5 +91,7 @@ urlpatterns = [
 	path('wikichild/<child_id>', views.wikichild, name='wikichild'),
 	path('editwikichild/<child_id>', views.editwikichild, name='editwikichild'),
 	path('add-wcm/', views.addwcm, name='addwcm'),
+	path('addmlbgame/', views.addmlbgame, name='addmlbgame'),
+	path('mlbpage/', views.mlbpage, name='mlbpage'),
 
 ]

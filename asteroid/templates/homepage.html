@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
+{% load static%}
 
 
 
 {% block contenido %}
 {{badir}}
+
+<script src="{% static 'js/masonry.pkgd.min.js' %}" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+
+
 
 {% if partidos %}
 <h4 style="font-family: sans-serif;">Football Activity</h4>
@@ -87,19 +92,25 @@
     <hr>
 {% endif %}
 
+
+
+<div style="clear: both;"></div>
+<hr>
+<div class="row" data-masonry='{"percentPosition": true }'>
 {% for a in articles %}
-	<article class="blog-post">
-    {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
-        <h4>{{a.titulo}}</h4>
-        <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{ a.item_cat.nombre }} | {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
-
-        {{a.short_desc}}
-
-        
-    </article>
-    <div style="clear: both;"></div>
-    <hr>
+<div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        {% if a.mainPic %}
+        <img class="bd-placeholder-img card-img-top" width="100%" src="{{a.mainPic}}">
+        {%endif%}
+        <div class="card-body">
+          <h5 class="card-title"><a href='{% url "item" a.id  %}' style="text-decoration: none;">{{a.titulo}}</a></h5>
+          <p class="card-text">{{a.short_desc|safe}}</p>
+        </div>
+      </div>
+       </div>
 {% endfor %}
+</div>
 
 
 

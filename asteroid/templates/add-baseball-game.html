@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block titulo %}Add New Item{% endblock %}
+{% block titulo %}Add New MLB Game{% endblock %}
 
 {% block contenido %}
 
@@ -11,20 +11,13 @@
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Date</label>
-            <input type="text" name="gameDate" value="{% now 'Y-m-d' %}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="text" name="fecha" value="{% now 'Y-m-d' %}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
-
-
-        <input type="hidden" name="innings" class="form-control" value="9" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-
-        <input type="hidden" name="stadium" value ="MLB TV" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
 
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Local Team</label>
           <select class="form-select mb-3" name="local">
-            {% for c in cats %}
+            {% for c in mlbteams %}
                 <option value="{{c.id}}">{{c.nombre}}</option>
             {% endfor %}
           </select>

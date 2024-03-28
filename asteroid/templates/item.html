@@ -7,14 +7,16 @@
 
 	<article class="blog-post">
 
+
+
    {% if thisItem.mainPic %}<img src="{{thisItem.mainPic}}" style="border:1px solid grey; float:left; width:30%; margin-right: 16px; margin-bottom: 16px;">{% endif %}
-        <h4>{{thisItem.titulo}} {% if thisItem.pubyear > 0 %} ({{thisItem.pubyear}}){% endif %}</h4>
-
-        <p class="blog-post-meta">{% if thisItem.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{ thisItem.item_cat.nombre }} | {{thisItem.fecha}} </p>
-
+       <p><span class="badge text-bg-success">{{thisItem.fecha}}</span>&nbsp;<a href='/c/{{thisItem.item_cat.id}}/0'><span class="badge text-bg-secondary">{{thisItem.item_cat.nombre}}</span></a></p>
+        <h4> {% if thisItem.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{thisItem.titulo}} {% if thisItem.pubyear > 0 %} ({{thisItem.pubyear}}){% endif %}</h4>
 
 
         {{thisItem.contenido|safe|linebreaks}}
+
+
 
         {% if tabla and thisItem.item_cat.id == 16  %}
         	{% for t in tabla %}
@@ -50,13 +52,13 @@
 
         {% endif %}
 
-        <p>{% for t in itags %}<a href="{% url 'itag' t.tag %}" style="text-decoration:none;">{{t.tag}}</a>&nbsp;|&nbsp;{%endfor%}
+        <p>{% for t in itags %}<a href="{% url 'itag' t.tag %}"><span class="badge badg-pill text-bg-primary">{{t.tag}}</span></a>&nbsp;{%endfor%}
 
         {% if notas %}
            	<div style="clear:both;"></div>
             {% for n in notas %}
             		<hr>
-                
+
              {% if n.InPogress %}
              	<div style='position:relative; width:31%; padding-top:45%; margin:1%; border:1px solid grey; float:left;
                 background-size: cover;

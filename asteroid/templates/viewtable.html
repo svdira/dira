@@ -9,7 +9,7 @@
  <article class="my-3" id="card">
      <h4>{{thisLiga.nombre}} |  <a href="{% url 'viewliga' 1 thisLiga.id %}" style="text-decoration: none;">Matches</a></h4>
 
-    {% if tipo == 'liga' %} 
+    {% if tipo == 'liga' %}
     <table class="table table-striped" style=" width:auto;">
           <thead>
           <tr>
@@ -79,7 +79,7 @@
 
               </div>
               <div class="card-footer text-muted">
-                {{m.fase}} | <a href="{% url 'viewmatch' m.id %}" target="_blank">view</a><br> {%if m.comms%}{{m.comms}}{%endif%}
+                {{m.fase}} | <a href="{% url 'viewmatch' m.id %}" target="_blank">view</a>
 
               </div>
 
@@ -94,7 +94,7 @@
 {% endif %}
 
 <h4>Group Stage</h4>
-    
+
     <table class="table table-striped" style=" width:auto;">
           <thead>
           <tr>
@@ -113,7 +113,7 @@
           </thead>
           <tbody>
             {% for f in tp2 %}
-                <tr>  
+                <tr>
                   <td>{{f.fase}}</td>
                     <td><a href="{% url 'sccteam' f.equipo_id %}" style="text-decoration:none;">{{f.equipo}}</a></td>
                     <td>{{f.ptos}}</td>
@@ -151,7 +151,7 @@
                     <td>{{f.equipo}}</td>
                     <td>{{f.goles}}</td>
                     <td>{% if f.penales == 0 %}0{%elif f.penales == 1%}1{%else%}{{f.penales}}{%endif%}</td>
-        
+
                 </tr>
             {% endfor %}
           </tbody>

@@ -71,7 +71,7 @@ def category(request,cat,p):
 
 	ocat = Categoria.objects.get(pk=int(cat))
 
-	cortes = Consumo.objects.filter(con_itm__item_cat__id=int(cat),fecha_fin__isnull=False).values('fecha_fin__year').exclude(fecha_fin__year=2023).annotate(qitems=Count('id')).order_by('-fecha_fin__year')
+	cortes = Consumo.objects.filter(con_itm__item_cat__id=int(cat),fecha_fin__isnull=False).values('fecha_fin__year').annotate(qitems=Count('id')).order_by('-fecha_fin__year')
 
 	return render(request,'category.html',{'articles':articles,'npages':range(npages),'page':int(p),'cat':cat,'ocat':ocat,'nitms':npics,'cortes':cortes})
 
@@ -124,7 +124,7 @@ def additem(request):
 				thisPersona = Persona.objects.get(pk=int(ltags[1].strip()))
 				new_rel = RelItemPersona.objects.create(item=newItem, persona=thisPersona,credit='author')
 				new_rel.save()
-				contador = 1 
+				contador = 1
 				for t in ltags:
 					if contador > 3:
 						bt = ItemTag.objects.create(item_t=newItem,tag=t.strip())
@@ -157,7 +157,7 @@ def addJournalEntry(request):
 		objCategoria = Categoria.objects.get(pk=7)
 		post_contenido = request.POST.get("contenido")
 		post_fecha = request.POST.get("fecha")
-		fecha_titulo =  datetime.strptime(post_fecha, '%Y-%m-%d').strftime('%A, %B %e, %Y')
+		fecha_titulo =  datetime.strptime(post_fecha, '%Y-%m-%d').strftime('%b %-d, %Y')
 
 		newItem = Item.objects.create(item_cat=objCategoria,titulo=fecha_titulo,contenido=post_contenido,fecha=post_fecha)
 		newItem.save()
@@ -472,7 +472,7 @@ def viewmonth(request,y,m):
 
 def quemar(request,itm):
 	thisItem = Item.objects.get(pk=itm)
-	newC = Consumo.objects.create(con_itm=thisItem,unidades="quemado",cantidad=0,fecha_inicio="2023-01-01",fecha_fin="2023-01-01")
+	newC = Consumo.objects.create(con_itm=thisItem,unidades="quemado",cantidad=0,fecha_inicio="1999-12-31",fecha_fin="1999-12-31")
 	newC.save()
 
 	return redirect('/item/{}'.format(itm))
@@ -641,10 +641,10 @@ def viewPersona(request,p):
 		html_t	= None
 
 
-	
-	
 
-	
+
+
+
 	nowItems = sorted(RelItemPersona.objects.filter(persona__id=thisPerson.id),  key=lambda t: t.item.pubyear)
 
 
@@ -1288,7 +1288,7 @@ def viewTable(request,liga):
     tg = Goles.objects.raw("select 1 as id, * from liga_goleadores where liga={} order by goles desc, penales desc".format(liga))
 
     matches = Partido.objects.filter(terminado=True,liga__id=int(liga)).exclude(fase__contains='Group').order_by('-fecha')
-    
+
     liga = Liga.objects.get(pk=int(liga))
     ligas = Liga.objects.all().order_by('-id')
     if 'Champions' in liga.nombre:
@@ -1351,6 +1351,24 @@ def addwcm(request):
 
 	return redirect('/wikichild/{}'.format(thisP.id))
 
+def addmlbgame(request):
+	mlbteams = mlbTeam.objects.all().order_by('nombre')
+
+	if request.method=='POST':
+
+		local_t = mlbTeam.objects.get(pk=int(request.POST.get('local')))
+		visit_t = mlbTeam.objects.get(pk=int(request.POST.get('visit')))
+
+		lr = int(request.POST.get('score').split(":")[0])
+		vr = int(request.POST.get('score').split(":")[1])
+
+		newG = mlbGame.objects.create(fecha=request.POST.get('fecha'),local=local_t,visit=visit_t,local_runs=lr,visit_runa=vr,comentarios=request.POST.get('comments'))
+
+	return render(request,'addmlbgame.html',{'mlbteams':mlbteams})
 
 
 
+def mlbpage(request):
+	partidos = mlbGame.objects.all().order_by('-fecha')
+
+	return render(request,'mlbpage.html',{'partidos':partidos})

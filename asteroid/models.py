@@ -60,7 +60,7 @@ class Item(models.Model):
 
 	@property
 	def short_desc(self):
-		return self.contenido[0:700]
+		return self.contenido[0:350]
 
 	@property
 	def card_desc(self):
@@ -583,7 +583,7 @@ class WikiChild(models.Model):
 			random_pk = choice(pks)
 			ppic = WCMedia.objects.get(pk=random_pk)
 			return ppic.imagen.url
-	
+
 	def __str__(self):
 		return self.titulo
 
@@ -594,4 +594,24 @@ class WCMedia(models.Model):
 	def __str__(self):
 		return self.wikichild.titulo
 
+class mlbTeam(models.Model):
+	nombre = models.CharField(max_length=200)
+	ciudad = models.CharField(max_length=200)
+	nomina = models.TextField()
+
+	def __str__(self):
+		return self.nombre
+
+
+
+class mlbGame(models.Model):
+	fecha = models.DateField()
+	local = models.ForeignKey(mlbTeam,on_delete=models.CASCADE, related_name='local_team')
+	visit = models.ForeignKey(mlbTeam,on_delete=models.CASCADE, related_name='visit_team')
+	local_runs = models.IntegerField()
+	visit_runa = models.IntegerField()
+	comentarios = models.TextField()
+
+	def __str__(self):
+		return str(self.id)+" | "+self.local.nombre +" v "+self.visit.nombre
 

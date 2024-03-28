@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-
+{% load static%}
 
 {% block contenido %}
 
+<script src="{% static 'js/masonry.pkgd.min.js' %}" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
 
 {% if cat == '1' or cat == '2' or cat == '3' or cat == '4' or cat == '14' or cat == '17' or cat == '15' or cat == '18' or cat == '19' or cat == '21' or cat == '22' %}
@@ -18,7 +19,7 @@
 	<article class="blog-post">
         {% if a.con_itm.mainPic %}<a href="{% url 'item' a.con_itm.id %}"> <img src="{{a.con_itm.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
         <h4>{{a.con_itm.titulo}}{% if a.con_itm.pubyear > 0 %} ({{a.con_itm.pubyear}}){% endif %}{% if a.season > 0 %} - Season {{a.season}}{% endif %}</h4>
-        <p class="blog-post-meta">{% if a.con_itm.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha_fin}}  | 
+        <p class="blog-post-meta">{% if a.con_itm.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha_fin}}  |
           <a href="{% url 'item' a.con_itm.id %}" style="text-decoration:none;">view</a></p>
 
         {{a.con_itm.short_desc}}
@@ -32,25 +33,22 @@
 {% else %}
 <h4 style="color:blue;">{{ocat.nombre}} ({{nitms}})</h4>
 <hr>
+<div class="row" data-masonry='{"percentPosition": true }'>
 {% for a in articles %}
-
-  <article class="blog-post">
-        {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
-        <h3>{{a.titulo}}</h3>
-        <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
-
-        {{a.short_desc}}
-
-
-        {% if a.mainLand and not a.mainPic %}
-        <p><br><a href="{% url 'item' a.id %}">
-          <img src="{{a.mainLand}}" style="border:1px solid grey; float:left; width:100%; margin-right: 16px; margin-bottom: 16px;">
-        </a>
+<div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        {% if a.mainPic %}
+        <img class="bd-placeholder-img card-img-top" width="100%" src="{{a.mainPic}}">
         {%endif%}
-    </article>
-    <div style="clear: both;"></div>
-    <hr>
+        <div class="card-body">
+          <h5 class="card-title"><a href='{% url "item" a.id  %}' style="text-decoration: none;">{{a.titulo}}</a></h5>
+          <p class="card-text">{{a.short_desc|safe}}</p>
+        </div>
+      </div>
+       </div>
 {% endfor %}
+</div>
+
 
 {%endif%}
 
