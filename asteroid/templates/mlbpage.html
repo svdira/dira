@@ -4,6 +4,9 @@
 
 {% block contenido %}
 
+    <h5>St. Louis Cardinals ({{wins}} - {{loss}}) | {{ prct|floatformat:3 }}</h5>
+    {{racha|safe}}
+
     {% if partidos %}
     <table class="table table-striped" style=" width:auto;">
           <thead>
@@ -17,12 +20,10 @@
           <tbody>
             {% for p in partidos %}
                 <tr>
-                    <td>{{p.fecha}}</td>
-                    <td><a href="#" style="text-decoration:none;">{{p.local.nombre}}</a></td>
+                    <td>{{p.fecha|date:"M d"}}</td>
+                    <td><a href="#" style="text-decoration:none;">{{p.local.nombre|truncatechars:9}}</a></td>
                     <td style="text-align: center;">{{p.local_runs}} - {{p.visit_runa}}</td>
-                    <td><a href="#" style="text-decoration:none;">{{p.visit.nombre}}</a></td>
-
-
+                    <td><a href="#" style="text-decoration:none;">{{p.visit.nombre|truncatechars:9}}</a></td>
                 </tr>
             {% endfor %}
           </tbody>

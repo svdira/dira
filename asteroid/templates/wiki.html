@@ -12,17 +12,18 @@
 
   <article class="blog-post">
         {% if wiki.mainPic %}<img src="{{wiki.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;">{% endif %}
-        <h4>{{wiki.titulo}}</h4>
-        {{wiki.contenido}}   
+        <h5>{{wiki.titulo}}</h5>
+        {{wiki.contenido}}
 
-        
+
         <br><br>
 
-        <h4>Pages | <a href="{% url 'addwikichild' wiki.id %}" style='text-decoration: none;'>Add Page</a> </h4> 
-  
+        <h5>Pages | <a href="{% url 'addwikichild' wiki.id %}" style='text-decoration: none;'>Add Page</a> </h5>
+        <hr>
+
     <div style="clear: both;"></div>
     {%if children%}
-          
+
     <div class="row" data-masonry='{"percentPosition": true }'>
       {% for c in children %}
       <div class="col-sm-6 col-lg-4 mb-4">

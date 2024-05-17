@@ -15,7 +15,7 @@
         {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
         <h4>{{a.titulo}}{% if a.pubyear > 0 %} ({{a.pubyear}}){% endif %}</h4>
         <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
-        
+
         {{a.short_desc}}
 
     </article>
@@ -30,14 +30,14 @@
 
   <article class="blog-post">
         {% if a.mainPic %}<a href="{% url 'item' a.id %}"> <img src="{{a.mainPic}}" style="border:1px solid grey; float:left; width:25%; margin-right: 16px; margin-bottom: 16px;"></a>{% endif %}
-        <h3>{{a.titulo}}</h3>
+        <h4>{{a.titulo}}</h4>
         <p class="blog-post-meta">{% if a.ncon > 0 %}<img src="/media/assets/checked.png" style="width:1em;">{% endif %} {{a.fecha}}  | <a href="{% url 'item' a.id %}" style="text-decoration:none;">view</a></p>
-        
+
         {{a.short_desc}}
 
-        
+
         {% if a.mainLand and not a.mainPic %}
-        <p><br><a href="{% url 'item' a.id %}"> 
+        <p><br><a href="{% url 'item' a.id %}">
           <img src="{{a.mainLand}}" style="border:1px solid grey; float:left; width:100%; margin-right: 16px; margin-bottom: 16px;">
         </a>
         {%endif%}
@@ -50,11 +50,11 @@
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    
+
     {% for np in npages %}
     <li class="page-item {% if np == page %}active{% endif %}"><a class="page-link" href="{% url 'catqueue' cat np %}">{{np}}</a></li>
     {% endfor %}
-  
+
   </ul>
 </nav>
 
