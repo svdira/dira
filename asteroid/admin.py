@@ -41,6 +41,8 @@ admin.site.register(WikiChild)
 admin.site.register(WCMedia)
 admin.site.register(mlbTeam)
 admin.site.register(mlbGame)
+admin.site.register(matchSquad)
+admin.site.register(squadPlayers)
 
 
 

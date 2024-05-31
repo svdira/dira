@@ -615,3 +615,17 @@ class mlbGame(models.Model):
 	def __str__(self):
 		return str(self.id)+" | "+self.local.nombre +" v "+self.visit.nombre
 
+class matchSquad(models.Model):
+	partido = models.ForeignKey(Partido,on_delete=models.CASCADE)
+	equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return "partido: " + str(self.partido.id) + " - "+ self.equipo.nombre
+
+class squadPlayers(models.Model):
+	squad = models.ForeignKey(matchSquad,on_delete=models.CASCADE)
+	jugador = models.ForeignKey(Contrato,on_delete=models.CASCADE)
+	tipo = models.CharField(max_length=1)
+
+	def __str__(self):
+		return "partido: " + str(self.squad.partido.id) + " - "+ self.jugador.jug.nombre

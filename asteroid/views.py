@@ -472,7 +472,7 @@ def viewmonth(request,y,m):
 
 def quemar(request,itm):
     thisItem = Item.objects.get(pk=itm)
-    newC = Consumo.objects.create(con_itm=thisItem,unidades="quemado",cantidad=0,fecha_inicio="1999-03-31",fecha_fin="1999-03-31")
+    newC = Consumo.objects.create(con_itm=thisItem,unidades="quemado",cantidad=0,fecha_inicio="2023-12-31",fecha_fin="2023-12-31")
     newC.save()
 
     return redirect('/item/{}'.format(itm))
@@ -1001,28 +1001,8 @@ def viewMatch(request,pid):
 
             og = True
 
-
-
         newG = Goles.objects.create(partido=partido,asignado=asig,contrato=ct,minuto=minuto,adicional=adicional,penal=pn,penales=False,og=og)
-        txtComm = "&#9917; "
-        if newG.og == False and newG.asignado=="1":
-            txtComm = txtComm+"<a href='#' style='text-decoration:none;'>"+partido.local.nombre+"</a> Gol de "+newG.contrato.jug.nombre
-        elif newG.og == False and newG.asignado=="2":
-            txtComm = txtComm+"<a href='#' style='text-decoration:none;'>"+partido.visita.nombre+"</a> Gol de "+newG.contrato.jug.nombre
-        elif newG.og == True and newG.asignado=="1":
-            txtComm = txtComm+"<a href='#' style='text-decoration:none;'>"+partido.local.nombre+"</a> Autogol de "+newG.contrato.jug.nombre
-        elif newG.og == True and newG.asignado=="2":
-            txtComm = txtComm+"<a href='#' style='text-decoration:none;'>"+partido.visita.nombre+" </a> Autogol de "+newG.contrato.jug.nombre
-
-        newC = PartidoComment.objects.create(comm_partido=partido,comm=txtComm,minuto=newG.minuto,tipo=2)
-        #1: Comentarios
-        #2: Goal
-        newC.save()
         newG.save()
-
-
-
-
 
         return render(request,'partido.html',{'matches':matches,'partido':partido,'jlocal':jugadores_local,'jvisit':jugadores_visit,'lgoles':lgoles,'vgoles':vgoles,'lpens':lpens,'vpens':vpens,'ligas':ligas,'listado':listado,'comentarios':comentarios})
 
@@ -1392,3 +1372,65 @@ def mlbpage(request):
     prct = 1.0*wins/ng
 
     return render(request,'mlbpage.html',{'partidos':partidos,'wins':wins,'ng':ng,'prct':prct,'loss':loss,'racha':str_racha})
+
+
+def viewsquad(request,par_id,equ_id):
+    check_squad = matchSquad.objects.filter(equipo__id=int(equ_id),partido__id=int(par_id)).count()
+
+    this_equipo = Equipo.objects.get(pk=int(equ_id))
+    this_partido = Partido.objects.get(pk=int(par_id))
+
+    if check_squad == 0:
+        new_S = matchSquad.objects.create(equipo=this_equipo,partido=this_partido)
+        new_S.save()
+        sc_id = new_S.id
+        plantilla = squadPlayers.objects.filter(squad__id=new_S.id)
+    else:
+        this_squad =  matchSquad.objects.filter(equipo__id=int(equ_id),partido__id=int(par_id)).latest('id')
+        sc_id = this_squad.id
+        plantilla = squadPlayers.objects.filter(squad__id=this_squad.id)
+
+    contratos = Contrato.objects.filter(equ__id=int(equ_id))
+
+    listado = ["Goal Keeper","Defender","Midfielder","Forward","Not Specified"]
+    
+    porteros = []
+    defensas = []
+    medicampos = []
+    delateros = []
+    not_spec = []
+
+    for p in plantilla:
+        if p.jugador.position == "Goal Keeper":
+            porteros.append(p)
+        elif p.jugador.position == "Defender":
+            defensas.append(p)
+        elif p.jugador.position == "Midfielder":
+            medicampos.append(p)
+        elif p.jugador.position == "Forward":
+            delateros.append(p)
+        elif p.jugador.position == "Not Specified":
+            not_spec.append(p)
+
+
+    return render(request,'squad.html',{'plantilla':plantilla,
+                                        'contratos':contratos,
+                                        'partido':this_partido,
+                                        'equipo':this_equipo,
+                                        'porteros':porteros,
+                                        'defensas':defensas,
+                                        'medicampos':medicampos,
+                                        'delateros':delateros,
+                                        'not_spec':not_spec,
+                                        'sc_id':sc_id})
+
+def updateSquad(request):
+
+    plantilla = matchSquad.objects.get(pk=int(request.POST.get("squad_id")))
+    contrato = Contrato.objects.get(pk=int(request.POST.get("contrato")))
+    tipo = request.POST.get("tipo")
+
+    newLP = squadPlayers.objects.create(squad=plantilla,jugador=contrato,tipo=tipo)
+
+
+    return redirect('/squad/{}/{}'.format(plantilla.partido.id,plantilla.equipo.id))

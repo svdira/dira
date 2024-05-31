@@ -93,5 +93,7 @@ urlpatterns = [
 	path('add-wcm/', views.addwcm, name='addwcm'),
 	path('addmlbgame/', views.addmlbgame, name='addmlbgame'),
 	path('mlbpage/', views.mlbpage, name='mlbpage'),
+	path('squad/<par_id>/<equ_id>', views.viewsquad, name='viewsquad'),
+	path('updatesquad/', views.updateSquad, name='updatesquad'),
 
 ]

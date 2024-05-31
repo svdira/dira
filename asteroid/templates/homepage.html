@@ -152,7 +152,9 @@
           </li>
         {% endfor %}
       </ul>
-
+      <br>
+<h4>Top Tags</h4>
+{% for t in item_tags %}<a href="{% url 'itag' t.tag %}"><span class="badge badg-pill text-bg-primary">{{t.tag}}  ({{t.qitems}})</span></a>&nbsp;{%endfor%}
       <br>
       <br>
 
