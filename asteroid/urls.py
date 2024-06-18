@@ -95,5 +95,6 @@ urlpatterns = [
 	path('mlbpage/', views.mlbpage, name='mlbpage'),
 	path('squad/<par_id>/<equ_id>', views.viewsquad, name='viewsquad'),
 	path('updatesquad/', views.updateSquad, name='updatesquad'),
+	path('newplayergoal/<t>/<m>/<a>/', views.addNewPlayerGoal, name='newplayergoal'),
 
 ]

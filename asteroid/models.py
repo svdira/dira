@@ -159,7 +159,7 @@ class Consumo(models.Model):
 	unidades = models.CharField(max_length=60)
 	cantidad = models.IntegerField()
 	fecha_inicio = models.DateField()
-	fecha_fin = models.DateField(null=True)
+	fecha_fin = models.DateField(null=True, blank=True)
 	season = models.IntegerField(default=0)
 	lan = models.CharField(max_length=2,default="ND")
 	formato = models.CharField(max_length=128,default="ND")

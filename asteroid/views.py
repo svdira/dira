@@ -1434,3 +1434,45 @@ def updateSquad(request):
 
 
     return redirect('/squad/{}/{}'.format(plantilla.partido.id,plantilla.equipo.id))
+
+def addNewPlayerGoal(request,t,m,a):
+    equipo = Equipo.objects.get(pk=int(t))
+    partido = Partido.objects.get(pk=int(m))
+    listado = ["Goal Keeper","Defender","Midfielder","Forward","Not Specified"]
+    asig = a
+    if request.method=='POST':
+
+        nombre = request.POST.get("nombre")
+        pais = request.POST.get("pais")
+        position = request.POST.get("position")
+        number = request.POST.get("number")
+
+        newJugador = Jugador.objects.create(nombre=nombre,pais=pais, biographics="This section nees to be expanded.")
+        newJugador.save()
+
+        newC = Contrato.objects.create(jug=newJugador,equ=equipo,active=True, position=position,number = number)
+        newC.save()
+
+        minuto = request.POST.get("minuto")
+        adicional = request.POST.get("adicional")
+
+        if request.POST.get("penal","0")=="0":
+            pn = False
+        else:
+            pn = True
+
+        if request.POST.get("autogol","0")=="0":
+            og = False
+        else:
+            if asig=="1":
+                asig="2"
+            else:
+                asig="1"
+
+            og = True
+
+        newG = Goles.objects.create(partido=partido,asignado=asig,contrato=newC,minuto=minuto,adicional=adicional,penal=pn,penales=False,og=og)
+        newG.save()
+        return(redirect('/viewmatch/{}/'.format(partido.id)))
+    else:
+        return render(request,'add-new-player-goal.html',{'equipo':equipo,'partido':partido,'listado':listado})

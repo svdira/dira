@@ -95,7 +95,7 @@
                     <input type="hidden" name="asignado" value="1">
 
                      <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Jugador</label>
+                      <label for="exampleInputEmail1" class="form-label">Jugador <a href="{% url 'newplayergoal' partido.local.id partido.id '1' %} ">Add New</a> </label>
                       <select class="form-select mb-3" name="contrato">
                             {% if jlocal %}
                                 {% for j in jlocal%}
@@ -204,7 +204,7 @@
                     <input type="hidden" name="asignado" value="2">
 
                      <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Jugador</label>
+                      <label for="exampleInputEmail1" class="form-label">Jugador <a href="{% url 'newplayergoal' partido.visita.id partido.id '2' %}">Add New</a> </label></label>
                       <select class="form-select mb-3" name="contrato">
                             {% if jvisit %}
                                 {% for j in jvisit%}
